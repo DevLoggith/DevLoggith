@@ -8,7 +8,7 @@ If you see something you like or something that piques your interest, please fee
 
 ---
 
-## The tech I primarily work with
+## The tech I have experience with
 
 **Languages**
 
