@@ -1,10 +1,10 @@
 # Welcome to my GitHub, I'm Logan 👋
 
-I'm a self taught, full-stack software developer based in Cleveland, Ohio that has 5 years of experience developing and deploying personal projects. I love creating solutions that make my ideas come to life, contributing to open source projects, and collaborating with others to build solutions I could never build on my own.
+I am a full stack software developer working primarily with JavaScript, React, Python, FastAPI and PostgreSQL. I am a big proponent of Shift-Left Development using tools like Ruff, Husky, and GitHub issue/PR templates. My current interests include TypeScript, React Testing Library (RTL), pytest, Poetry, and CI/CD tools like GitHub Actions.
 
-I care about writing clean, scalable code and enjoy always having something new to learn.
+As a self taught, full-stack software developer I have 5 years of experience developing and deploying personal projects. I love creating solutions that make my ideas come to life, contributing to open source projects, and collaborating with others to build solutions I could never build on my own.
 
-If you see something you like or something that piques your interest, please feel free to reach out on [Linkedin](https://www.linkedin.com/in/logan-miklosovic/) or [Bluesky](https://bsky.app/profile/loggith.bsky.social). I'm always open to feedback, collaboration, and a good conversation about software, music, or art!
+I care about writing clean, scalable code and enjoy always having something new to learn. If you see something you like or something that piques your interest, please feel free to reach out on [Linkedin](https://www.linkedin.com/in/logan-miklosovic/)!
 
 ---
 
@@ -20,6 +20,7 @@ If you see something you like or something that piques your interest, please fee
 **Frameworks & Libraries**
 
 ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
+![React Testing Library](https://img.shields.io/badge/React_Testing_Library-FF4785?style=flat-square&logo=testinglibrary&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=flat-square&logo=bootstrap&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-000000?style=flat-square&logo=flask&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat-square&logo=fastapi&logoColor=white)
