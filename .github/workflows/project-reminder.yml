@@ -1,0 +1,105 @@
+name: Personal Project Draft Reminders
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # Runs daily at 12:00 UTC (8:00 AM EST)
+  workflow_dispatch: # Allows manual trigger button in GitHub Actions tab
+
+env:
+  PROJECT_NUMBER: 2
+
+jobs:
+  check-reminders:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Personal Project Drafts and Alert Discord
+        uses: actions/github-script@v7
+        env:
+          PROJECT_PAT: ${{ secrets.PROJECT_PAT }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_USER_ID: ${{ secrets.DISCORD_USER_ID }}
+        with:
+          github-token: ${{ secrets.PROJECT_PAT }}
+          script: |
+            // Get today's date in YYYY-MM-DD format (UTC)
+            const today = new Date().toISOString().split('T')[0];
+            console.log(`Checking "Contact Again" dates matching today: ${today}`);
+
+            const owner = context.repo.owner;
+            const projectNum = parseInt(process.env.PROJECT_NUMBER);
+
+            // GraphQL query optimized strictly for personal profile draft issues
+            const query = `
+              query($owner: String!, $number: Int!) {
+                user(login: $owner) {
+                  projectV2(number: $number) {
+                    items(first: 100) {
+                      nodes {
+                        id
+                        content {
+                          __typename
+                          ... on DraftIssue {
+                            title
+                            id
+                          }
+                        }
+                        fieldValues(first: 20) {
+                          nodes {
+                            ... on ProjectV2ItemFieldValueCommon {
+                              field {
+                                ... on ProjectV2FieldCommon {
+                                  name
+                                }
+                              }
+                            }
+                            ... on ProjectV2ItemFieldDateValue {
+                              date
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            `;
+
+            const result = await github.graphql(query, { owner, number: projectNum });
+            
+            if (!result.user || !result.user.projectV2) {
+              throw new Error(`Could not find project #${projectNum} under user "${owner}". Check your token permissions.`);
+            }
+
+            const items = result.user.projectV2.items.nodes;
+
+            for (const item of items) {
+              if (!item.content || item.content.__typename !== 'DraftIssue') continue;
+
+              let contactAgainDate = null;
+
+              // Parse out your "Contact Again" custom date field
+              for (const value of item.fieldValues.nodes) {
+                if (value.field && value.field.name === 'Contact Again' && value.date) {
+                  contactAgainDate = value.date;
+                  break;
+                }
+              }
+
+              if (contactAgainDate === today) {
+                console.log(`Found matching draft: "${item.content.title}"`);
+
+                const userId = process.env.DISCORD_USER_ID;
+                const boardUrl = `https://github.com{owner}/projects/${projectNum}`;
+                const draftUrl = `${boardUrl}/itemId/${item.content.id}`;
+                
+                // Construct a clean, private-focused Discord alert matching your personal server setup
+                const message = `🔔 <@${userId}> **Contact Again Reminder Today!**\n📝 **${item.content.title}**\n🔗 Open Sidepanel: ${draftUrl}`;
+
+                // Send the alert to your private Discord server channel
+                await fetch(process.env.DISCORD_WEBHOOK_URL, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ content: message }),
+                });
+              }
+            }
