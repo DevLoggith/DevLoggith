@@ -89,7 +89,7 @@ jobs:
                 console.log(`Found matching draft: "${item.content.title}"`);
 
                 const userId = process.env.DISCORD_USER_ID;
-                const boardUrl = `https://github.com${owner}/projects/${projectNum}`;
+                const boardUrl = `https://github.com/users/${owner}/projects/${projectNum}`;
                 const draftUrl = `${boardUrl}/views/1?pane=issue&itemId=${item.databaseId}`;
                 
                 // Construct a clean, private-focused Discord alert matching your personal server setup
