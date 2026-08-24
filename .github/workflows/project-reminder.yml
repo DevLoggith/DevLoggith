@@ -35,7 +35,7 @@ jobs:
                   projectV2(number: $number) {
                     items(first: 100) {
                       nodes {
-                        id
+                        databaseId
                         content {
                           __typename
                           ... on DraftIssue {
@@ -90,7 +90,7 @@ jobs:
 
                 const userId = process.env.DISCORD_USER_ID;
                 const boardUrl = `https://github.com${owner}/projects/${projectNum}`;
-                const draftUrl = `${boardUrl}/views/1?pane=issue&itemId=${item.content.id}`;
+                const draftUrl = `${boardUrl}/views/1?pane=issue&itemId=${item.databaseId}`;
                 
                 // Construct a clean, private-focused Discord alert matching your personal server setup
                 const message = `🔔 <@${userId}> **Contact Again Reminder Today!**\n📝 **${item.content.title}**\n🔗 Open Sidepanel: ${draftUrl}`;
