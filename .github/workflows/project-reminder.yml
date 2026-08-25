@@ -2,7 +2,7 @@ name: Personal Project Draft Reminders
 
 on:
   schedule:
-    - cron: '0 12 * * *' # Runs daily at 12:00 UTC (8:00 AM EST)
+    - cron: '48 11 * * *' # Runs daily at 11:48 UTC (7:48 AM EST)
   workflow_dispatch: # Allows manual trigger button in GitHub Actions tab
 
 env:
