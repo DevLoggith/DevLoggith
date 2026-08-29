@@ -2,7 +2,7 @@ name: Personal Project Draft Reminders
 
 on:
   schedule:
-    - cron: '32 11 * * *'
+    - cron: '42 11 * * *'
   workflow_dispatch:
 
 env:
