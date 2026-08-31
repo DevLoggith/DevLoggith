@@ -1,8 +1,8 @@
 name: Personal Project Draft Reminders
 
 on:
-  schedule:
-    - cron: '42 11 * * *'
+  repository_dispatch:
+    types: [run-daily-reminder]
   workflow_dispatch:
 
 env:
